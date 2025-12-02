@@ -48,7 +48,8 @@ def main(puzzle_input: str) -> None:
 
     assert solve(example_ranges, part1pattern) == example[1]
 
-    puzzle_ranges = parse(Path(puzzle_input).read_text())
+    text = Path(puzzle_input).read_text()
+    puzzle_ranges = parse(text)
 
     start = time.perf_counter()
     part1solution = solve(puzzle_ranges, part1pattern)
