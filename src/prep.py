@@ -19,7 +19,7 @@ AdventOfCode $year Day $day
 from pathlib import Path
 
 example = """
-"""
+""", 0, 0
 
 
 def solve() -> int:
@@ -27,8 +27,21 @@ def solve() -> int:
 
 
 def main() -> None:
-    puzzle_input = Path(__file__).with_suffix(".txt").read_text()
-    print(puzzle_input)
+    assert solve(example[0]) == example[1]
+
+    puzzle_input = Path(__file__).with_suffix(".txt").read_text().splitlines()
+
+    start = time.perf_counter()
+    answer = solve(puzzle_input)
+    end = time.perf_counter()
+    print(f"Part 1 solution: {answer}, runtime = {end - start:.3f} s")
+
+    assert solve(example[0]) == example[2]
+
+    start = time.perf_counter()
+    answer = solve(puzzle_input)
+    end = time.perf_counter()
+    print(f"Part 2 solution: {answer}, runtime = {end - start:.3f} s")
 
 
 if __name__ == "__main__":
