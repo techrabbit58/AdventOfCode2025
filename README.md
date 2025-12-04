@@ -1,8 +1,6 @@
 # Advent of Code 2025
 Here are My solutions for the AoC 2025 puzzles.
 
-__Table of Contents__
-
 * [Day 1](./src/day01.py) :star::star:
 * [Day 2](./src/day02.py) :star::star:
 * [Day 3](./src/day03.py) :star::star:
