@@ -3,17 +3,17 @@ Here are My solutions for the AoC 2025 puzzles.
 
 __Table of Contents__
 
-* [Day 1](./src/day01.py)
-* [Day 2](./src/day02.py)
-* [Day 3](./src/day03.py)
-* [Day 4](./src/day04.py)
-* Day 5
-* Day 6
-* Day 7
-* Day 8
-* Day 9
-* Day 10
-* Day 11
-* Day 12
+* [Day 1](./src/day01.py) :star::star:
+* [Day 2](./src/day02.py) :star::star:
+* [Day 3](./src/day03.py) :star::star:
+* [Day 4](./src/day04.py) :star::star:
+* Day 5 :question::question:
+* Day 6 :question::question:
+* Day 7 :question::question:
+* Day 8 :question::question:
+* Day 9 :question::question:
+* Day 10 :question::question:
+* Day 11 :question::question:
+* Day 12 :question::question:
 
 ---
