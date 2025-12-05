@@ -20,8 +20,7 @@ https://adventofcode.com/$year/day/$day
 import time
 from pathlib import Path
 
-example = """
-""", -1, -1
+example = """""", -1, -1
 
 
 def solve(puzzle_input) -> int:
