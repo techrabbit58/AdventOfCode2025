@@ -20,20 +20,24 @@ https://adventofcode.com/$year/day/$day
 import time
 from pathlib import Path
 
-example = """""", -1, -1
+example = """""", None, None
+
+
+def parse(text: str):
+    ...
 
 
 def solve_part1(puzzle_input) -> int:
-    return 0
+    ...
 
 
 def solve_part2(puzzle_input) -> int:
-    return 0
+    ...
 
 
 def main() -> None:
     if solve_part1(example[0]) != example[1]:
-        print("Part 1 failed")
+        print("Part 1 not done")
         exit()
 
     puzzle_input = Path(__file__).with_suffix(".txt").read_text()
@@ -44,7 +48,7 @@ def main() -> None:
     print(f"Part 1 solution: {answer}, runtime = {end - start:.3f} s")
 
     if solve_part1(example[0]) != example[2]:
-        print("Part 2 failed")
+        print("Part 2 not done")
         exit()
 
     start = time.perf_counter()
