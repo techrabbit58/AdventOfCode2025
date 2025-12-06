@@ -47,7 +47,7 @@ def main() -> None:
     end = time.perf_counter()
     print(f"Part 1 solution: {answer}, runtime = {end - start:.3f} s")
 
-    if solve_part1(example[0]) != example[2]:
+    if solve_part2(example[0]) != example[2]:
         print("Part 2 not done")
         exit()
 
