@@ -9,6 +9,8 @@ from collections.abc import Callable
 from functools import reduce
 from pathlib import Path
 
+
+# WARNING! Whitespace matters. Do not strip it.
 example = """123 328  51 64 
  45 64  387 23 
   6 98  215 314
