@@ -23,6 +23,12 @@ PATTERN = re.compile(r"([+*]\s*)")
 
 
 def parse_for_part1(text: str) -> ProblemList:
+    """
+    Read the table with significant whitespace preserved
+    and transpose it. So it becomes a list of problems,
+    one problem per row, with each problem being a list of numbers,
+    followed by an operator.
+    """
     lines = [line + " " for line in text.splitlines()]
     operators = PATTERN.findall(lines[-1])
     sizes = [len(op) - 1 for op in operators]
@@ -35,14 +41,19 @@ def parse_for_part1(text: str) -> ProblemList:
             rows[-1].append(row[i: i + size])
             i += size + 1
 
-    return list(zip(*rows))
+    return list(zip(*rows))  # transpose m*n matrix to n*m
 
 
 def transpose(raw_numbers: Problem) -> Problem:
+    """Mirror and ranspose a list of strings."""
     return ["".join(digits) for digits in zip(*map(reversed, raw_numbers))]
 
 
 def parse_for_part2(text: str) -> ProblemList:
+    """
+    Take the same input as for part 1, but then transpose the numbers
+    according to "cephalopod math".
+    """
     raw_problems = parse_for_part1(text)
     operands = [problem[-1] for problem in raw_problems]
     transposed_numbers = [transpose(problem[:-1]) for problem in raw_problems]
