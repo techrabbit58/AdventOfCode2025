@@ -3,6 +3,7 @@ AdventOfCode 2025 Day 6
 https://adventofcode.com/2025/day/6
 """
 import operator
+import re
 import time
 from collections.abc import Callable
 from functools import reduce
@@ -17,10 +18,22 @@ type Problem = list[str]
 type ProblemList = list[Problem]
 type ParseFunc = Callable[[str], ProblemList]
 
+PATTERN = re.compile(r"([+*]\s*)")
+
 
 def parse_for_part1(text: str) -> ProblemList:
-    lines = text.splitlines()
-    rows = [row.split() for row in lines]
+    lines = [line + " " for line in text.splitlines()]
+    operators = PATTERN.findall(lines[-1])
+    sizes = [len(op) - 1 for op in operators]
+
+    rows = []
+    for row in lines:
+        rows.append([])
+        i = 0
+        for size in sizes:
+            rows[-1].append(row[i: i + size])
+            i += size + 1
+
     num_problems = len(rows[0])
 
     problems = [[] for _ in range(num_problems)]
@@ -33,39 +46,28 @@ def parse_for_part1(text: str) -> ProblemList:
 
 
 def transpose(raw_numbers: Problem) -> Problem:
-    return raw_numbers
+    num_positions = len(raw_numbers[0])
+    transposed_digits = [[] for _ in range(num_positions)]
+    for i, transposed in enumerate(transposed_digits):
+        for symbols in raw_numbers:
+            transposed.append(symbols[num_positions - i - 1])
+    transposed_numbers = ["".join(digits) for digits in transposed_digits]
+    return transposed_numbers
 
 
 def parse_for_part2(text: str) -> ProblemList:
     raw_problems = parse_for_part1(text)
     operands = [problem[-1] for problem in raw_problems]
-    transposed_numbers = [transpose(problem[:-1]) for problem in raw_problems[:-1]]
+    transposed_numbers = [transpose(problem[:-1]) for problem in raw_problems]
     problems = [nums + [op] for op, nums in zip(operands, transposed_numbers)]
-    print(problems)
-
     return problems
 
 
-def solve_different(puzzle_input: str, parse: ParseFunc) -> int:
-    """
-    WARNING! This is slower, and using eval() on untrustful input
-    is dangerous. The eval() function takes its input as python
-    source code and then executes it. This can do anything that _you_
-    can do on your computer!
-    """
-    problems = parse(puzzle_input)
-    return sum(eval(problem[-1].join(problem[:-1])) for problem in problems)
-
-
 def solve(puzzle_input: str, parse: ParseFunc) -> int:
-    """
-    This is a safer solution than slove_part1_a(), and pretty way faster.
-    It first translates the
-    """
     problems = parse(puzzle_input)
     answer = 0
     for problem in problems:
-        func, init = {"+": (operator.add, 0), "*": (operator.mul, 1)}[problem[-1]]
+        func, init = {"+": (operator.add, 0), "*": (operator.mul, 1)}[problem[-1].strip()]
         result = reduce(func, map(int, problem[:-1]), init)
         answer += result
     return answer
