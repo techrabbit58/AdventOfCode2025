@@ -14,4 +14,12 @@ Here are My solutions for the AoC 2025 puzzles.
 * Day 11 :cloud::cloud:
 * Day 12 :cloud::cloud:
 
+__LEGEND__
+
+|     symbol     |     means...     |
+|:--------------:|:----------------:|
+|    :cloud:     |   not started    |
+| :construction: | work in progress |
+|     :zzz:      |     pausing      |
+
 ---
