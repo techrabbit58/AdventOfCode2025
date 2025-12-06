@@ -36,7 +36,7 @@ def parse_for_part2(text: str) -> ProblemList:
     return ["0 0 +".split()]
 
 
-def solve_part1_a(puzzle_input: str, parse: ParseFunc) -> int:
+def solve_different(puzzle_input: str, parse: ParseFunc) -> int:
     """
     WARNING! This is slower, and using eval() on untrustful input
     is dangerous. The eval() function takes its input as python
