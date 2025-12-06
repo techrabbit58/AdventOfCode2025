@@ -32,8 +32,18 @@ def parse_for_part1(text: str) -> ProblemList:
     return problems
 
 
+def transpose(raw_numbers: Problem) -> Problem:
+    return raw_numbers
+
+
 def parse_for_part2(text: str) -> ProblemList:
-    return ["0 0 +".split()]
+    raw_problems = parse_for_part1(text)
+    operands = [problem[-1] for problem in raw_problems]
+    transposed_numbers = [transpose(problem[:-1]) for problem in raw_problems[:-1]]
+    problems = [nums + [op] for op, nums in zip(operands, transposed_numbers)]
+    print(problems)
+
+    return problems
 
 
 def solve_different(puzzle_input: str, parse: ParseFunc) -> int:
