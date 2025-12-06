@@ -20,6 +20,7 @@ __LEGEND__
 |:--------------:|:----------------:|
 |    :cloud:     |   not started    |
 | :construction: | work in progress |
+|     :star:     |      solved      |
 |     :zzz:      |     pausing      |
 
 ---
