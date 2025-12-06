@@ -14,8 +14,9 @@ example = """123 328  51 64
   6 98  215 314
 *   +   *   +  """, 4277556, 3263827
 
-type Problem = list[str]
-type ProblemList = list[Problem]
+type TupleOrList = tuple | list
+type Problem = TupleOrList[str]
+type ProblemList = TupleOrList[Problem]
 type ParseFunc = Callable[[str], ProblemList]
 
 PATTERN = re.compile(r"([+*]\s*)")
@@ -34,25 +35,11 @@ def parse_for_part1(text: str) -> ProblemList:
             rows[-1].append(row[i: i + size])
             i += size + 1
 
-    num_problems = len(rows[0])
-
-    problems = [[] for _ in range(num_problems)]
-
-    for i, problem in enumerate(problems):
-        for row in rows:
-            problem.append(row[i])
-
-    return problems
+    return list(zip(*rows))
 
 
 def transpose(raw_numbers: Problem) -> Problem:
-    num_positions = len(raw_numbers[0])
-    transposed_digits = [[] for _ in range(num_positions)]
-    for i, transposed in enumerate(transposed_digits):
-        for symbols in raw_numbers:
-            transposed.append(symbols[num_positions - i - 1])
-    transposed_numbers = ["".join(digits) for digits in transposed_digits]
-    return transposed_numbers
+    return ["".join(digits) for digits in zip(*map(reversed, raw_numbers))]
 
 
 def parse_for_part2(text: str) -> ProblemList:
