@@ -64,6 +64,20 @@ def parse_for_part2(text: str) -> ProblemList:
 
 
 def solve(puzzle_input: str, parse: ParseFunc) -> int:
+    """
+    (1) Transform the puzzle input to a list of problem records. A problem record
+    is a list of strings where all but the last element represent positive integer
+    numbers, and the last element represents one of "+" or "*" for addition or
+    multiplication. Example: ["123 ", "4   ", "31  ", "3446", "+   "].
+    (2) Add or multiply all numbers in a problem. Example: result = 123 + 4 +31 + 3446.
+    (3) Add all results up to the answer.
+    (4) Return the answer to the caller.
+    :param puzzle_input: A text file, organized as equal length lines
+        (spaces are significant)
+    :param parse: A function that can transform the given puzzle input to
+        a list of problem records
+    :return: the answer to the puzzle as a single integer number
+    """
     problems = parse(puzzle_input)
     answer = 0
     for problem in problems:
