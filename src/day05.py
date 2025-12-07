@@ -34,11 +34,12 @@ def parse(database: str) -> tuple[IngredientRanges, IngredientList]:
     pattern = re.compile(r"(?P<irlow>\d+)-(?P<irhigh>\d+)|(?P<ingred>\d+)")
     for m in pattern.finditer(database):
         match m.groupdict():
-            case {"irlow": irlow, "irhigh": irhigh, "ingred": ingred}:
-                if ingred is not None:
-                    ingredients.append(int(ingred))
-                else:
-                    ingredient_ranges.append((int(irlow), int(irhigh)))
+            case {"irlow": None, "irhigh": None, "ingred": ingred}:
+                ingredients.append(int(ingred))
+            case {"irlow": irlow, "irhigh": irhigh, "ingred": None}:
+                ingredient_ranges.append((int(irlow), int(irhigh)))
+            case _:
+                raise RuntimeError(f"Incompatible token: {m.groupdict()}")
     return ingredient_ranges, ingredients
 
 

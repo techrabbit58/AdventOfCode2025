@@ -1,5 +1,6 @@
 """
 AdventOfCode 2025 Day 4
+https://adventofcode.com/2025/day/4
 """
 import time
 from pathlib import Path

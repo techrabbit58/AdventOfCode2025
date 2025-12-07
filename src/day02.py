@@ -1,4 +1,7 @@
 """
+AdventOfCode 2025 Day 2
+https://adventofcode.com/2025/day/2
+
 Part 1: In an inclusive range of positive decimal integer numbers [i, j], find all
 numbers that follow a certain pattern of digits: ([1-9][0-9]~n)~2. That means:
 a matching number must have an even number of decimal digits, and its first half

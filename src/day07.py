@@ -31,27 +31,22 @@ SOURCEBEAM: Final[LiteralString] = "S"
 BEAM: Final[LiteralString] = "|"
 SPLITTER: Final[LiteralString] = "^"
 
-# x: horizontal position of a beam or splitter, 0 ... end of line
-# y: vertical position of a beam or splitter, 0 ... (depth - 1)
-type Pair = tuple[int, int]  # (x, y)
-
 
 @dataclass
 class Manifold:
     depth: int = field(init=False, default=0)
-    beams: dict[int, set[int]] = field(
-        init=False, default_factory=lambda: defaultdict(set))
+    initial_beam: int = field(init=False, default=-1)
     splitters: dict[int, set[int]] = field(
         init=False, default_factory=lambda: defaultdict(set))
     pathcounts: dict[int, dict[int, int]] = field(
         init=False, default_factory=lambda: defaultdict(lambda: defaultdict(int)))
 
-    def add_beam(self, beam: Pair) -> None:
-        self.beams[beam[1]].add(beam[0])
-        self.pathcounts[beam[1]][beam[0]] = 1
+    def set_initial_beam(self, x: int, y: int) -> None:
+        self.initial_beam = x
+        self.pathcounts[y][x] = 1
 
-    def add_splitter(self, splitter: Pair) -> None:
-        self.splitters[splitter[1]].add(splitter[0])
+    def add_splitter(self, x: int, y: int) -> None:
+        self.splitters[y].add(x)
 
 
 def parse(text: str) -> Manifold:
@@ -60,15 +55,15 @@ def parse(text: str) -> Manifold:
         manifold.depth = y
         for x, symbol in enumerate(row):
             if symbol == SOURCEBEAM:
-                manifold.add_beam((x, y))
+                manifold.set_initial_beam(x, y)
             if symbol == SPLITTER:
-                manifold.add_splitter((x, y))
+                manifold.add_splitter(x, y)
     manifold.depth += 1
     return manifold
 
 
 def solve(manifold: Manifold) -> tuple[int, int]:
-    current_beams = manifold.beams[0]
+    current_beams = {manifold.initial_beam}
     total_splits = 0
 
     for level in range(1, manifold.depth):
@@ -77,9 +72,12 @@ def solve(manifold: Manifold) -> tuple[int, int]:
         pathcounts = copy.copy(manifold.pathcounts[level - 1])
 
         if splits:
-            # if we reach this point, tere are one or more splits
+            # if we reach this point, there are one or more splits
+            # part 1
             total_splits += len(splits)
             current_beams = current_beams - splits
+
+            # part 2
             for split in splits:
                 current_beams.add(split - 1)
                 pathcounts[split - 1] += pathcounts[split]
@@ -87,7 +85,6 @@ def solve(manifold: Manifold) -> tuple[int, int]:
                 pathcounts[split + 1] += pathcounts[split]
                 pathcounts[split] = 0
 
-        manifold.beams[level] = current_beams
         manifold.pathcounts[level] = pathcounts
 
     total_paths = sum(manifold.pathcounts[manifold.depth - 1].values())
