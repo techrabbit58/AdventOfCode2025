@@ -7,7 +7,7 @@ Here are My solutions for the AoC 2025 puzzles.
 * [Day 4](./src/day04.py) :star::star:
 * [Day 5](./src/day05.py) :star::star:
 * [Day 6](./src/day06.py) :star::star:
-* Day 7 :cloud::cloud:
+* [Day 7](./src/day07.py) :star::star:
 * Day 8 :cloud::cloud:
 * Day 9 :cloud::cloud:
 * Day 10 :cloud::cloud:
