@@ -45,26 +45,26 @@ def squared_distance(p: Vector, q: Vector) -> int:
 
 
 def solve(vectors: set[Vector], limit: int = None) -> int:
-    adjacencies = {
+    nodes = {
         squared_distance(p, q): {p, q}
         for p, q in combinations(vectors, 2)
     }
 
-    distances = sorted(adjacencies.keys())
-
+    connection_cost = sorted(nodes.keys())
     circuits = deque()
-    circuits.append(adjacencies[distances[0]])
+    circuits.append(nodes[connection_cost[0]])
     last_seen = list(circuits[0])
     singles = vectors.copy()
 
-    for i, distance in enumerate(distances[1:], 1):
-        if i == limit or not singles:
+    for i, cost in enumerate(connection_cost[1:], 1):
+        if i == limit or not singles:  # limit: part 1, singles: part 2
             break
 
-        connection = adjacencies[distance]
-        singles -= connection
-        last_seen = list(connection)
+        connection = nodes[cost]
+        singles -= connection  # part 2
+        last_seen = list(connection)  # part 2
 
+        # step 1: add new connection to existing circuit or add as new subcircuit
         for circuit in circuits:
             if circuit & connection:
                 circuit |= connection
@@ -72,7 +72,7 @@ def solve(vectors: set[Vector], limit: int = None) -> int:
         else:
             circuits.append(connection)
 
-        # connect subcircuits
+        # step 2: connect subcircuits
         for c1, c2 in combinations(circuits, 2):
             if c1 & c2:
                 connected_circuit = c1 | c2
@@ -80,16 +80,19 @@ def solve(vectors: set[Vector], limit: int = None) -> int:
                 circuits.remove(c2)
                 circuits.append(connected_circuit)
 
+    # part 1:
     # add vectors that are still unconnected
+    # just to be sure to catch all circuits for part 1,
+    # due to a remark in the explanation of AoCs part 1 example
     for single in singles:
         circuits.append({single})
 
     circuit_sizes = sorted([len(circuit) for circuit in circuits], reverse=True)
 
-    if limit is None:
+    if limit is None:  # part 2
         (x1, _, _), (x2, _, _) = last_seen
         answer = x1 * x2
-    else:
+    else:  # part 1
         answer = math.prod(circuit_sizes[:3])
 
     return answer
