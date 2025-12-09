@@ -8,7 +8,7 @@ Here are My solutions for the AoC 2025 puzzles.
 * [Day 5](./src/day05.py) :star::star:
 * [Day 6](./src/day06.py) :star::star:
 * [Day 7](./src/day07.py) :star::star:
-* [Day 8](./src/day08.py) :star::star: (thanks to [0xdf](https://youtu.be/-w5mFTtRLE8?si=CVyIRpnA9_0vM_zS))
+* [Day 8](./src/day08.py) :star::lemon: (thanks to [0xdf](https://youtu.be/-w5mFTtRLE8?si=CVyIRpnA9_0vM_zS))
 * Day 9 :star::construction:
 * Day 10 :cloud::cloud:
 * Day 11 :cloud::cloud:
@@ -16,11 +16,12 @@ Here are My solutions for the AoC 2025 puzzles.
 
 __LEGEND__
 
-|     symbol     |     means...     |
-|:--------------:|:----------------:|
-|    :cloud:     |   not started    |
-| :construction: | work in progress |
-|     :star:     |      solved      |
-|     :zzz:      |     pausing      |
+|     symbol     |      means...       |
+|:--------------:|:-------------------:|
+|    :cloud:     |     not started     |
+| :construction: |  work in progress   |
+|     :star:     |       solved        |
+|     :zzz:      |       pausing       |
+|    :lemon:     | not my own solution |
 
 ---
