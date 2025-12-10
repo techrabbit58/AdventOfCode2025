@@ -135,6 +135,8 @@ def main() -> None:
         print("Part 2 not done")
         exit()
 
+    print("Part 2 is a long running task...")
+
     start = time.perf_counter()
     answer = solve_part2(pixels)
     end = time.perf_counter()
