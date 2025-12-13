@@ -6,12 +6,41 @@ import configparser
 import time
 from pathlib import Path
 
-def parse(text: str):
-    ...
+
+def parse(text: str) -> dict[str, list[str]]:
+    """
+    Parse the given list of fanout specifications to a
+    dictionary fanouts[current_device]: [next_device, ...].
+    There is one single entry with the key "you". This is the
+    start of any path to the final output.
+    "you" may also be part of multiple fanout specifications.
+    There is a fanout "out" that can be part of multiple
+    fanout specifications as well, but is giuaranteed never
+    being a key to a fanout. So out is a terminal symbol.
+    In fact, "out" is the single final output, where every
+    valid path terminates.
+    There may be paths that never reach "out". These paths
+    are invalid (at least for part 1).
+    """
+    lines = [line.split() for line in text.splitlines()]
+    return {head[:-1]: tail for head, *tail in lines}
 
 
-def solve_part1(puzzle_input) -> int:
-    ...
+def count_paths(fanouts: dict[str, list[str]], current: str, path: set[str]) -> int:
+    if current == "out":
+        return 1
+
+    answer = 0
+    for next_device in fanouts[current]:
+        if next_device not in path:
+            answer += count_paths(fanouts, next_device, path | {current})
+
+    return answer
+
+
+
+def solve_part1(fanouts: dict[str, list[str]]) -> int:
+    return count_paths(fanouts, "you", set())
 
 
 def solve_part2(puzzle_input) -> int:
@@ -32,14 +61,18 @@ def main() -> None:
 
     example = load_example(Path(__file__).with_suffix(".ini"))
 
-    if solve_part1(example[0]) != example[1]:
+    ex_fanouts = parse(example[0])
+
+    if solve_part1(ex_fanouts) != example[1]:
         print("Part 1 not done")
         exit()
 
     puzzle_input = Path(__file__).with_suffix(".txt").read_text()
 
+    fanouts = parse(puzzle_input)
+
     start = time.perf_counter()
-    answer = solve_part1(puzzle_input)
+    answer = solve_part1(fanouts)
     end = time.perf_counter()
     print(f"Part 1 solution: {answer}, runtime = {end - start:.3f} s")
 
