@@ -36,7 +36,7 @@ def solve_part2(puzzle_input) -> int:
 
 
 def load_example(file: Path) -> tuple[str | None, int | None, int | None]:
-    example = configparser.ConfigParser()
+    example = configparser.ConfigParser(delimiters=('=',), comment_prefixes=(';',))
     with open(file) as f:
         example.read_file(f)
     text = example["Example"].get("text", None)
