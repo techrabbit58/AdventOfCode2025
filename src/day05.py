@@ -2,24 +2,13 @@
 AdventOfCode 2025 Day 5
 https://adventofcode.com/2025/day/5
 """
+import configparser
 import re
 import time
 from collections import deque
 from collections.abc import Callable
 from operator import itemgetter
 from pathlib import Path
-
-example = """3-5
-10-14
-16-20
-12-18
-
-1
-5
-8
-11
-17
-32""", 3, 14
 
 type SortableSequence = list | deque
 type Bounds = tuple[int, int]  # (lower, upper)
@@ -101,7 +90,20 @@ def solve_part2(ingredient_ranges: IngredientRanges, mergefunc: RangeMerger) -> 
     return answer
 
 
+def load_example(file: Path) -> tuple[str | None, int | None, int | None]:
+    example = configparser.ConfigParser()
+    with open(file) as f:
+        example.read_file(f)
+    text = example["Example"].get("text", None)
+    part1_ex = example["Example"].getint("part1", None)
+    part2_ex = example["Example"].getint("part2", None)
+    return text, part1_ex, part2_ex
+
+
 def main() -> None:
+
+    example = load_example(Path(__file__).with_suffix(".ini"))
+
     ex_ranges, ex_ingredients = parse(example[0])
 
     if solve_part1(ex_ranges, ex_ingredients) != example[1]:

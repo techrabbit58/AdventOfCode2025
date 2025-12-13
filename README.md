@@ -1,5 +1,5 @@
 # Advent of Code 2025
-Here are My solutions for the AoC 2025 puzzles.
+Here are my solutions for the AoC 2025 puzzles.
 
 * [Day 1](./src/day01.py) :star::star:
 * [Day 2](./src/day02.py) :star::star:

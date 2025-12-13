@@ -2,19 +2,9 @@
 AdventOfCode 2025 Day 1
 https://adventofcode.com/2025/day/1
 """
+import configparser
 import time
 from pathlib import Path
-
-example = """L68
-L30
-R48
-L5
-R60
-L55
-L1
-L99
-R14
-L82""", 3, 6
 
 FULL_CIRCLE = 100  # 0 to 99
 
@@ -52,7 +42,19 @@ def solve(rotations: list[int]) -> tuple[int, int]:
     return zero_count, zero_transits
 
 
+def load_example(file: Path) -> tuple[str | None, int | None, int | None]:
+    example = configparser.ConfigParser()
+    with open(file) as f:
+        example.read_file(f)
+    text = example["Example"].get("text", None)
+    part1_ex = example["Example"].getint("part1", None)
+    part2_ex = example["Example"].getint("part2", None)
+    return text, part1_ex, part2_ex
+
+
 def main() -> None:
+    example = load_example(Path(__file__).with_suffix(".ini"))
+
     rotations = parse(example[0])
     part1test, part2test = solve(rotations)
 

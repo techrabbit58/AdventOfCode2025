@@ -7,19 +7,11 @@ Install it (e.g.) with pip: "pip install shapely" or uv: "uv add shapely".
 You may probably want to analyze this GitHub repository to learn about it:
 https://github.com/Gravitar64/Advent-of-Code-2025/tree/master
 """
+import configparser
 import re
 import time
 from itertools import combinations
 from pathlib import Path
-
-example = """7,1
-11,1
-11,7
-9,7
-9,5
-2,5
-2,3
-7,3""", 50, 24
 
 type Pixel = tuple[int, int]  # (x, y) as pixel index
 type PixelList = list[Pixel]
@@ -122,7 +114,20 @@ def solve_part2(pixels: PixelList) -> int:
     return max_area
 
 
+def load_example(file: Path) -> tuple[str | None, int | None, int | None]:
+    example = configparser.ConfigParser()
+    with open(file) as f:
+        example.read_file(f)
+    text = example["Example"].get("text", None)
+    part1_ex = example["Example"].getint("part1", None)
+    part2_ex = example["Example"].getint("part2", None)
+    return text, part1_ex, part2_ex
+
+
 def main() -> None:
+
+    example = load_example(Path(__file__).with_suffix(".ini"))
+
     ex_pixels = parse(example[0])
 
     if solve_part1(ex_pixels) != example[1]:

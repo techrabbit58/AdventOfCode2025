@@ -2,6 +2,7 @@
 AdventOfCode 2025 Day 6
 https://adventofcode.com/2025/day/6
 """
+import configparser
 import operator
 import re
 import time
@@ -9,16 +10,8 @@ from collections.abc import Callable
 from functools import reduce
 from pathlib import Path
 
-
-# WARNING! Whitespace matters. Do not strip it.
-example = """123 328  51 64 
- 45 64  387 23 
-  6 98  215 314
-*   +   *   +  """, 4277556, 3263827
-
-type TupleOrList = tuple | list
-type Problem = TupleOrList[str]
-type ProblemList = TupleOrList[Problem]
+type Problem = tuple[str] | list[str]
+type ProblemList = tuple[Problem] | list[Problem]
 type ParseFunc = Callable[[str], ProblemList]
 
 PATTERN = re.compile(r"([+*]\s*)")
@@ -87,9 +80,21 @@ def solve(puzzle_input: str, parse: ParseFunc) -> int:
     return answer
 
 
+def load_example(file: Path) -> tuple[str | None, int | None, int | None]:
+    example = configparser.ConfigParser()
+    with open(file) as f:
+        example.read_file(f)
+    text = example["Example"].get("text", None)
+    part1_ex = example["Example"].getint("part1", None)
+    part2_ex = example["Example"].getint("part2", None)
+    return text, part1_ex, part2_ex
+
+
 def main() -> None:
 
-    if solve(example[0], parse_for_part1) != example[1]:
+    example = load_example(Path(__file__).with_suffix(".ini"))
+
+    if solve(example[0].replace("_", " "), parse_for_part1) != example[1]:
         print("Part 1 not done")
         exit()
 
@@ -100,7 +105,7 @@ def main() -> None:
     end = time.perf_counter()
     print(f"Part 1 solution: {answer}, runtime = {end - start:.3f} s")
 
-    if solve(example[0], parse_for_part2) != example[2]:
+    if solve(example[0].replace("_", " "), parse_for_part2) != example[2]:
         print("Part 2 not done")
         exit()
 

@@ -2,16 +2,13 @@
 AdventOfCode 2025 Day 10
 https://adventofcode.com/2025/day/10
 """
+import configparser
 import time
 from dataclasses import dataclass
 from itertools import combinations
 from pathlib import Path
 
 import z3
-
-example = """[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}
-[...#.] (0,2,3,4) (2,3) (0,4) (0,1,2) (1,2,3,4) {7,5,12,7,2}
-[.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}""", 7, 33
 
 
 @dataclass(kw_only=True)
@@ -119,7 +116,19 @@ def solve_part2(machines: list[Machine]) -> int:
     return answer
 
 
+def load_example(file: Path) -> tuple[str | None, int | None, int | None]:
+    example = configparser.ConfigParser()
+    with open(file) as f:
+        example.read_file(f)
+    text = example["Example"].get("text", None)
+    part1_ex = example["Example"].getint("part1", None)
+    part2_ex = example["Example"].getint("part2", None)
+    return text, part1_ex, part2_ex
+
+
 def main() -> None:
+    example = load_example(Path(__file__).with_suffix(".ini"))
+
     ex_machines = parse(example[0])
     if solve_part1(ex_machines) != example[1]:
         print("Part 1 not done")

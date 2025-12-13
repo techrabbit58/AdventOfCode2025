@@ -2,19 +2,9 @@
 AdventOfCode 2025 Day 4
 https://adventofcode.com/2025/day/4
 """
+import configparser
 import time
 from pathlib import Path
-
-example = """..@@.@@@@.
-@@@.@.@.@@
-@@@@@.@.@@
-@.@@@@..@.
-@@.@@@@.@@
-.@@@@@@@.@
-.@.@.@.@@@
-@.@@@.@@@@
-.@@@@@@@@.
-@.@.@@@.@.""", 13, 43
 
 A_ROLL = "@"
 
@@ -80,7 +70,20 @@ def solve_part2(puzzle_input: str) -> int:
     return answer
 
 
+def load_example(file: Path) -> tuple[str | None, int | None, int | None]:
+    example = configparser.ConfigParser()
+    with open(file) as f:
+        example.read_file(f)
+    text = example["Example"].get("text", None)
+    part1_ex = example["Example"].getint("part1", None)
+    part2_ex = example["Example"].getint("part2", None)
+    return text, part1_ex, part2_ex
+
+
 def main() -> None:
+
+    example = load_example(Path(__file__).with_suffix(".ini"))
+
     assert solve_part1(example[0]) == example[1]
 
     puzzle_input = Path(__file__).with_suffix(".txt").read_text()

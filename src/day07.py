@@ -2,29 +2,13 @@
 AdventOfCode 2025 Day 7
 https://adventofcode.com/2025/day/7
 """
+import configparser
 import copy
 import time
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Final, LiteralString
-
-example = """.......S.......
-...............
-.......^.......
-...............
-......^.^......
-...............
-.....^.^.^.....
-...............
-....^.^...^....
-...............
-...^.^...^.^...
-...............
-..^...^.....^..
-...............
-.^.^.^.^.^...^.
-...............""", 21, 40
 
 SPACE: Final[LiteralString] = "."
 SOURCEBEAM: Final[LiteralString] = "S"
@@ -92,7 +76,19 @@ def solve(manifold: Manifold) -> tuple[int, int]:
     return total_splits, total_paths
 
 
+def load_example(file: Path) -> tuple[str | None, int | None, int | None]:
+    example = configparser.ConfigParser()
+    with open(file) as f:
+        example.read_file(f)
+    text = example["Example"].get("text", None)
+    part1_ex = example["Example"].getint("part1", None)
+    part2_ex = example["Example"].getint("part2", None)
+    return text, part1_ex, part2_ex
+
+
 def main() -> None:
+
+    example = load_example(Path(__file__).with_suffix(".ini"))
 
     ex_manifold = parse(example[0])
 

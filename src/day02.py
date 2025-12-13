@@ -17,13 +17,10 @@ and repeated sequences together must compose to a full match. For instance,
 12|12|12|2|12 is not a match, because there is one incomplete sequence in the middle.
 1234|1234|123 is not a match because the last sequence is not complete.
 """
+import configparser
 import re
 import time
 from pathlib import Path
-
-example = """11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
-1698522-1698528,446443-446449,38593856-38593862,565653-565659,
-824824821-824824827,2121212118-2121212124""", 1227775554, 4174379265
 
 
 def parse(text: str) -> list[tuple[int, int]]:
@@ -44,7 +41,19 @@ def solve(id_ranges: list[tuple[int, int]], pattern: re.Pattern) -> int:
     return answer
 
 
+def load_example(file: Path) -> tuple[str | None, int | None, int | None]:
+    example = configparser.ConfigParser()
+    with open(file) as f:
+        example.read_file(f)
+    text = example["Example"].get("text", None)
+    part1_ex = example["Example"].getint("part1", None)
+    part2_ex = example["Example"].getint("part2", None)
+    return text, part1_ex, part2_ex
+
+
 def main() -> None:
+    example = load_example(Path(__file__).with_suffix(".ini"))
+
     example_ranges = parse(example[0])
 
     part1pattern = re.compile(r"([1-9][0-9]*)\1")

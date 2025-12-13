@@ -4,6 +4,7 @@ Prepare for a new day of AoC 2025.
 (2) Download puzzle input and create a dayNN.txt file.
 """
 import argparse
+import configparser
 import os
 from pathlib import Path
 from string import Template
@@ -13,14 +14,13 @@ from dotenv import load_dotenv
 
 YEAR = 2025
 
-template = Template('''"""
+prog_template = Template('''"""
 AdventOfCode $year Day $day
 https://adventofcode.com/$year/day/$day
 """
+import configparser
 import time
 from pathlib import Path
-
-example = """""", None, None
 
 
 def parse(text: str):
@@ -35,7 +35,20 @@ def solve_part2(puzzle_input) -> int:
     ...
 
 
+def load_example(file: Path) -> tuple[str | None, int | None, int | None]:
+    example = configparser.ConfigParser()
+    with open(file) as f:
+        example.read_file(f)
+    text = example["Example"].get("text", None)
+    part1_ex = example["Example"].getint("part1", None)
+    part2_ex = example["Example"].getint("part2", None)
+    return text, part1_ex, part2_ex
+
+
 def main() -> None:
+
+    example = load_example(Path(__file__).with_suffix(".ini"))
+
     if solve_part1(example[0]) != example[1]:
         print("Part 1 not done")
         exit()
@@ -62,7 +75,6 @@ if __name__ == "__main__":
 ''')
 
 url_template = Template('https://adventofcode.com/$year/day/$day/input')
-
 
 load_dotenv()
 
@@ -92,8 +104,19 @@ def main() -> None:
     if prog.exists():
         print(f"File exists: {prog.as_posix()}, did not overwrite")
     else:
-        prog.write_text(template.substitute(day=args.day, year=YEAR))
+        prog.write_text(prog_template.substitute(day=args.day, year=YEAR))
         print(f"New file: {prog.as_posix()}")
+
+    ini = prog.with_suffix(".ini")
+
+    if ini.exists():
+        print(f"File exists: {ini.as_posix()}, did not overwrite")
+    else:
+        example = configparser.ConfigParser()
+        example["Example"] = {"text": "", "part1": -1, "part2": -1}
+        with ini.open("w") as f:
+            example.write(f)
+        print(f"New file: {ini.as_posix()}")
 
     data = prog.with_suffix(".txt")
 

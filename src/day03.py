@@ -2,14 +2,10 @@
 AdventOfCode 2025 Day 3
 https://adventofcode.com/2025/day/3
 """
+import configparser
 import time
 from collections import deque
 from pathlib import Path
-
-example = """987654321111111
-811111111111119
-234234234234278
-818181911112111""".splitlines(), 357, 3121910778619
 
 
 def find_max(segment: str, size: int) -> deque[int]:
@@ -37,6 +33,15 @@ def find_max(segment: str, size: int) -> deque[int]:
     return result
 
 
+def load_example(file: Path) -> tuple[str | None, int | None, int | None]:
+    example = configparser.ConfigParser()
+    with open(file) as f:
+        example.read_file(f)
+    text = example["Example"].get("text", None)
+    part1_ex = example["Example"].getint("part1", None)
+    part2_ex = example["Example"].getint("part2", None)
+    return text, part1_ex, part2_ex
+
 
 def solve(banks: list[str], size: int = 2) -> int:
     answer = 0
@@ -46,7 +51,10 @@ def solve(banks: list[str], size: int = 2) -> int:
 
 
 def main() -> None:
-    assert solve(example[0]) == example[1]
+
+    example = load_example(Path(__file__).with_suffix(".ini"))
+
+    assert solve(example[0].splitlines()) == example[1]
 
     puzzle_input = Path(__file__).with_suffix(".txt").read_text().splitlines()
 
@@ -56,7 +64,7 @@ def main() -> None:
     print(f"Part 1 solution: {answer}, runtime = {end - start:.3f} s")
 
     size = 12
-    assert solve(example[0], size=size) == example[2]
+    assert solve(example[0].splitlines(), size=size) == example[2]
 
     start = time.perf_counter()
     answer = solve(puzzle_input, size=size)
