@@ -98,7 +98,7 @@ def solve_part2(pixels: PixelList) -> int:
     Part 1 has been mine, but part 1 is trivial.
     But part 2 was way too hard for me. I needed help.
     This genius part 2 solution, I've borrowed it from YT "0xdf".
-    Look at his video to see the brilliant solution that is based
+    Watch his video to see the brilliant solution that is based
     on a method called "ray finding", or read his original
     code on GitLab: https://gitlab.com/0xdf/aoc2025
     I suggest you consider subscribing to his YT channel and
