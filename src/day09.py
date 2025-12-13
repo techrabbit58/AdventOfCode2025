@@ -1,6 +1,11 @@
 """
 AdventOfCode 2025 Day 9
 https://adventofcode.com/2025/day/9
+There is also a quite nice and fast solution based
+on an extra library called "shapely".
+Install it (e.g.) with pip: "pip install shapely" or uv: "uv add shapely".
+You may probably want to analyze this GitHub repository to learn about it:
+https://github.com/Gravitar64/Advent-of-Code-2025/tree/master
 """
 import re
 import time

@@ -4,7 +4,7 @@ My solution is not very efficient. It is home-grown, and kind of "naive".
 I'd better known [Kruskal's algorithm](https://en.wikipedia.org/wiki/Kruskal%27s_algorithm)
 before starting the solution. Because I didn't, I hat to find an own algorithm.
 
-It turns out, mine works, but is unnecessarily slow.
+It turns out, mine works, but is needlessly slow.
 
 Here is an example of Kruskal's algorithm:
 
@@ -66,26 +66,26 @@ def main():
 
     mst, total_cost = kruskal(10, edges)
 
-    print("\n--- result ---")
-    print("edges of MST:", mst)  # MST = Minimum Spanning Tree
-    print("total cost:", total_cost)
+    print("\n--- Result ---")
+    print("Edges of MST:", mst)  # MST = Minimum Spanning Tree
+    print("Total cost:", total_cost)
 ```
 
 It produces output like so:
 ```
-Kante hinzugefügt: 0 -- 1 (Kosten: 1)
-Kante hinzugefügt: 1 -- 2 (Kosten: 2)
-Kante hinzugefügt: 2 -- 3 (Kosten: 3)
-Kante hinzugefügt: 3 -- 4 (Kosten: 4)
-Kante hinzugefügt: 4 -- 5 (Kosten: 5)
-Kante hinzugefügt: 5 -- 6 (Kosten: 6)
-Kante hinzugefügt: 6 -- 7 (Kosten: 7)
-Kante hinzugefügt: 7 -- 8 (Kosten: 8)
-Kante hinzugefügt: 8 -- 9 (Kosten: 9)
+New edge: 0 -- 1 (cost: 1)
+New edge: 1 -- 2 (cost: 2)
+New edge: 2 -- 3 (cost: 3)
+New edge: 3 -- 4 (cost: 4)
+New edge: 4 -- 5 (cost: 5)
+New edge: 5 -- 6 (cost: 6)
+New edge: 6 -- 7 (cost: 7)
+New edge: 7 -- 8 (cost: 8)
+New edge: 8 -- 9 (cost: 9)
 
---- Ergebnis ---
-MST-Kanten: [(0, 1, 1), (1, 2, 2), (2, 3, 3), (3, 4, 4), (4, 5, 5),
+--- Result ---
+Edges of MST: [(0, 1, 1), (1, 2, 2), (2, 3, 3), (3, 4, 4), (4, 5, 5),
              (5, 6, 6), (6, 7, 7), (7, 8, 8), (8, 9, 9)]
-Gesamtkosten: 45
+Total cost: 45
 ```
 ---
